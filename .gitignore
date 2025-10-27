@@ -1,0 +1,45 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.tmp
+
+# Environment
+.env
+.env.*
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/plan.out
+terraform/.terraform.lock.hcl
+*.backup
+
+# AWS keys or credentials
+aws-idat_accessKeys.csv
+
+# System files
+.DS_Store
+Thumbs.db
+~$*
+*.swp
+*.swo
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+
+# Word temp files
+~$pasos.docx
+pasos.docx
