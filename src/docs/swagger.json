@@ -1,0 +1,50 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Proyecto Final API",
+    "version": "1.0.0",
+    "description": "Documentación de la API del Proyecto Final"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Inicio",
+        "responses": {
+          "200": {
+            "description": "Mensaje de bienvenida"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Verificar estado del servidor",
+        "responses": {
+          "200": {
+            "description": "Servidor operativo"
+          }
+        }
+      }
+    },
+    "/api/info": {
+      "get": {
+        "summary": "Información general del proyecto",
+        "responses": {
+          "200": {
+            "description": "Datos del entorno"
+          }
+        }
+      }
+    },
+    "/api/version": {
+      "get": {
+        "summary": "Versión actual de la API",
+        "responses": {
+          "200": {
+            "description": "Versión y fecha de actualización"
+          }
+        }
+      }
+    }
+  }
+}
