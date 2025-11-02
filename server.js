@@ -24,7 +24,7 @@ const startServer = async () => {
   try {
     await testConnection();
     app.listen(port, () => {
-      console.log(`✅ Server listening on port ${port}`);
+      console.log(`✅ Server listening on port V2.5 ${port}`);
       console.log(`📚 API Docs: http://localhost:${port}/api-docs`);
     });
   } catch (error) {
