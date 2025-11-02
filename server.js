@@ -23,10 +23,11 @@ app.use('/', routes);
 const startServer = async () => {
   try {
     await testConnection();
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {  
       console.log(`✅ Server listening on port V2.5 ${port}`);
       console.log(`📚 API Docs: http://localhost:${port}/api-docs`);
     });
+
   } catch (error) {
     console.error('❌ Error al iniciar el servidor:', error);
     process.exit(1);
