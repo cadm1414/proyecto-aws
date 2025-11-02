@@ -15,4 +15,4 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 //app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use('/', routes);
-app.listen(port, () => console.log(`✅ Server listening on port V2.3 ${port}`));
+app.listen(port, () => console.log(`✅ Server listening on port V2.4 ${port}`));
