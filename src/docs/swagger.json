@@ -3,11 +3,28 @@
   "info": {
     "title": "Proyecto Final API",
     "version": "1.0.0",
-    "description": "Documentación de la API del Proyecto Final"
+    "description": "Documentación de la API del Proyecto Final con PostgreSQL"
   },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor de desarrollo"
+    }
+  ],
+  "tags": [
+    {
+      "name": "General",
+      "description": "Endpoints generales"
+    },
+    {
+      "name": "Users",
+      "description": "Gestión de usuarios"
+    }
+  ],
   "paths": {
     "/": {
       "get": {
+        "tags": ["General"],
         "summary": "Inicio",
         "responses": {
           "200": {
@@ -18,6 +35,7 @@
     },
     "/health": {
       "get": {
+        "tags": ["General"],
         "summary": "Verificar estado del servidor",
         "responses": {
           "200": {
@@ -28,6 +46,7 @@
     },
     "/api/info": {
       "get": {
+        "tags": ["General"],
         "summary": "Información general del proyecto",
         "responses": {
           "200": {
@@ -38,11 +57,304 @@
     },
     "/api/version": {
       "get": {
+        "tags": ["General"],
         "summary": "Versión actual de la API",
         "responses": {
           "200": {
             "description": "Versión y fecha de actualización"
           }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Obtiene todos los usuarios",
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Crea un nuevo usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "lastName", "email", "password"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Juan"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Pérez"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "juan@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario creado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos o email duplicado"
+          }
+        }
+      }
+    },
+    "/api/users/active": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Obtiene todos los usuarios activos",
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios activos"
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login de usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "juan@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login exitoso"
+          },
+          "401": {
+            "description": "Credenciales inválidas"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Obtiene un usuario por ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario encontrado"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Actualiza un usuario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del usuario"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario actualizado exitosamente"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Elimina un usuario permanentemente",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario eliminado exitosamente"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      }
+    },
+    "/api/users/{id}/deactivate": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Desactiva un usuario (soft delete)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario desactivado exitosamente"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID auto-generado del usuario"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nombre del usuario"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Apellido del usuario"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Nombre completo del usuario"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email del usuario"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Estado del usuario"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha de creación"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha de actualización"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "Juan",
+          "lastName": "Pérez",
+          "fullName": "Juan Pérez",
+          "email": "juan@example.com",
+          "isActive": true,
+          "createdAt": "2025-11-02T10:00:00Z",
+          "updatedAt": "2025-11-02T10:00:00Z"
         }
       }
     }
