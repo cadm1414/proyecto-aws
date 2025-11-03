@@ -11,10 +11,17 @@ const sequelize = new Sequelize(
     dialect: 'postgres',
     logging: false,
     pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
+      max: 10,
+      min: 2,
+      acquire: 60000,
+      idle: 10000,
+      evict: 1000
+    },
+    dialectOptions: {
+      connectTimeout: 60000
+    },
+    retry: {
+      max: 3
     }
   }
 );
@@ -23,8 +30,10 @@ const testConnection = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ Conexión a PostgreSQL establecida correctamente.');
+    return true;
   } catch (error) {
     console.error('❌ Error al conectar a PostgreSQL:', error.message);
+    throw error;
   }
 };
 
