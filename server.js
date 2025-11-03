@@ -22,15 +22,14 @@ app.use('/', routes);
 
 const startServer = async () => {
   try {
-    await testConnection();
-    app.listen(port, () => {
-      console.log(`✅ Server listening on port V2.5 ${port}`);
-      console.log(`📚 API Docs: http://localhost:${port}/api-docs`);
-    });
+    await testConnection();    
   } catch (error) {
     console.error('❌ Error al iniciar el servidor:', error);
-    process.exit(1);
   }
+  app.listen(port, () => {
+    console.log(`✅ Server listening on port V2.5 ${port}`);
+    console.log(`📚 API Docs: http://localhost:${port}/api-docs`);
+  });
 };
 
 startServer();
