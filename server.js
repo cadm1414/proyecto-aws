@@ -22,11 +22,20 @@ app.use('/', routes);
 
 const startServer = async () => {
   try {
-    await testConnection();
+    /* await testConnection();
     app.listen(port, () => {
       console.log(`✅ Server listening on port V2.5 ${port}`);
       console.log(`📚 API Docs: http://localhost:${port}/api-docs`);
+    }); */
+    app.listen(port, () => {
+      console.log(`✅ Server listening on port V2.6 ${port}`);
+      console.log(`📚 API Docs: http://localhost:${port}/api-docs`);
     });
+
+    // Verifica conexión en background (NO bloquear startup)
+    testConnection()
+      .then(() => console.log('✅ DB ready'))
+      .catch(err => console.error('⚠️ La BD no está lista todavía:', err.message));
   } catch (error) {
     console.error('❌ Error al iniciar el servidor:', error.message);
     process.exit(1);
